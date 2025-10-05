@@ -174,15 +174,6 @@ valuescope/
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 라이선스
-
-MIT License - 자유롭게 사용, 수정, 배포 가능합니다.
-
-## 📧 문의
-
-- **프로젝트 링크**: [https://github.com/yourusername/valuescope](https://github.com/yourusername/valuescope)
-- **이메일**: contact@valuescope.com
-- **데모**: [https://valuescope.vercel.app](https://valuescope.vercel.app)
 
 ## ⚠️ 면책 조항
 
