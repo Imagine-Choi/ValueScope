@@ -1,26 +1,22 @@
-import HeroSection from '@/components/home/HeroSection';
-import EducationalBanner from '@/components/home/EducationalBanner';
-import QuickStart from '@/components/home/QuickStart';
+import SimpleHero from '@/components/home/SimpleHero';
+import BeginnerGuide from '@/components/home/BeginnerGuide';
 import TopStocks from '@/components/home/TopStocks';
-import HowItWorks from '@/components/home/HowItWorks';
+import LatestNews from '@/components/home/LatestNews';
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      {/* Hero Section */}
-      <HeroSection />
+      {/* 심플하고 트렌디한 히어로 섹션 */}
+      <SimpleHero />
 
-      {/* Educational Banner - 미국 주식 기초 가이드 */}
-      <EducationalBanner />
-
-      {/* Quick Start - 빠른 포트폴리오 시뮬레이터 */}
-      <QuickStart />
+      {/* 최신 핫토픽 뉴스 */}
+      <LatestNews />
 
       {/* Today's Top Value Stocks */}
       <TopStocks />
 
-      {/* How It Works - 3단계 가이드 */}
-      <HowItWorks />
+      {/* 미국 주식이 처음이라면 - A to Z 가이드 */}
+      <BeginnerGuide />
     </main>
   );
 }

@@ -11,6 +11,7 @@ export default function Navbar() {
     const navLinks = [
         { href: '/', label: '홈' },
         { href: '/screener', label: '종목 스크리너' },
+        { href: '/stocks/undervalued', label: '저평가 우량주 100선' },
         { href: '/portfolio', label: '포트폴리오' },
         { href: '/news', label: '뉴스' },
         { href: '/learn', label: '투자 가이드' },

@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Slider } from '@/components/ui/slider';
-import { Filter, ArrowRight } from 'lucide-react';
+import { Filter, ArrowRight, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
 
 // Mock data - 실제로는 API에서 가져올 데이터
@@ -27,6 +27,7 @@ export default function ScreenerContent() {
     const [divYieldMin, setDivYieldMin] = useState(0);
     const [sortBy, setSortBy] = useState('score');
     const [filteredStocks, setFilteredStocks] = useState(mockStocks);
+    const [showHelp, setShowHelp] = useState(false);
 
     const handleFilter = () => {
         const filtered = mockStocks.filter(stock =>
@@ -45,12 +46,54 @@ export default function ScreenerContent() {
 
     return (
         <div className="container mx-auto px-4 py-8">
+            {/* Help Section */}
+            {showHelp && (
+                <Card className="mb-6 bg-blue-50 border-blue-200">
+                    <CardContent className="p-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                            <div>
+                                <p className="font-semibold text-blue-900 mb-2">📊 P/E 비율이란?</p>
+                                <p className="text-gray-700 mb-1">주가를 주당순이익(EPS)으로 나눈 값입니다.</p>
+                                <p className="text-gray-700">• 낮을수록 저평가</p>
+                                <p className="text-gray-700">• 15 이하: 매우 저평가</p>
+                                <p className="text-gray-700">• 15-25: 적정가</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-blue-900 mb-2">💰 배당수익률이란?</p>
+                                <p className="text-gray-700 mb-1">주가 대비 연간 배당금의 비율입니다.</p>
+                                <p className="text-gray-700">• 높을수록 배당 매력적</p>
+                                <p className="text-gray-700">• 3% 이상: 우수</p>
+                                <p className="text-gray-700">• 5% 이상: 고배당주</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-blue-900 mb-2">⭐ ValueScope 점수란?</p>
+                                <p className="text-gray-700 mb-1">P/E, 배당, 재무건전성 등을 종합한 점수입니다.</p>
+                                <p className="text-gray-700">• 80점 이상: 우수</p>
+                                <p className="text-gray-700">• 70-80점: 양호</p>
+                                <p className="text-gray-700">• 70점 미만: 보통</p>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
+
             {/* Filters */}
             <Card className="mb-8">
                 <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                        <Filter className="w-5 h-5" />
-                        필터 설정
+                    <CardTitle className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <Filter className="w-5 h-5" />
+                            필터 설정
+                        </div>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="gap-2"
+                            onClick={() => setShowHelp(!showHelp)}
+                        >
+                            <HelpCircle className="w-4 h-4" />
+                            {showHelp ? '도움말 숨기기' : '도움말 보기'}
+                        </Button>
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -67,13 +110,13 @@ export default function ScreenerContent() {
                                 max={50}
                                 step={1}
                             />
-                            <p className="text-xs text-gray-500 mt-2">낮을수록 저평가</p>
+                            <p className="text-xs text-gray-500 mt-2">💡 15 이하면 저평가, 25 이상이면 고평가</p>
                         </div>
 
                         {/* Dividend Yield Filter */}
                         <div>
                             <label className="block text-sm font-medium mb-2">
-                                배당수익률 (최소): <span className="text-blue-600 font-bold">{divYieldMin}%</span>
+                                배당수익률 (최소): <span className="text-blue-600 font-bold">{divYieldMin.toFixed(1)}%</span>
                             </label>
                             <Slider
                                 value={[divYieldMin]}
@@ -82,20 +125,22 @@ export default function ScreenerContent() {
                                 max={5}
                                 step={0.1}
                             />
-                            <p className="text-xs text-gray-500 mt-2">높을수록 배당 매력적</p>
+                            <p className="text-xs text-gray-500 mt-2">💡 3% 이상이면 우수한 배당주</p>
                         </div>
 
                         {/* Sort By */}
                         <div>
-                            <label className="block text-sm font-medium mb-2">정렬 기준</label>
+                            <label className="block text-sm font-medium mb-2">
+                                정렬 기준
+                            </label>
                             <Select value={sortBy} onValueChange={setSortBy}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="정렬 선택" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="score">ValueScope 점수</SelectItem>
-                                    <SelectItem value="pe">P/E 비율 (낮은순)</SelectItem>
-                                    <SelectItem value="dividend">배당수익률 (높은순)</SelectItem>
+                                    <SelectItem value="score">⭐ ValueScope 점수</SelectItem>
+                                    <SelectItem value="pe">📊 P/E 비율 (낮은순)</SelectItem>
+                                    <SelectItem value="dividend">💰 배당수익률 (높은순)</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
